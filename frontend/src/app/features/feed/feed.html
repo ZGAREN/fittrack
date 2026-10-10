@@ -1,0 +1,29 @@
+<div class="feed-page">
+  <h1>Fil d'activité</h1>
+
+  @if (loading()) {
+    <p>Chargement…</p>
+  } @else if (activities().length === 0) {
+    <p class="empty">
+      Aucune activité à afficher. Suivez des personnes depuis votre
+      <a routerLink="/profile">profil</a> pour voir leurs sorties ici.
+    </p>
+  } @else {
+    <ul class="activity-list">
+      @for (activity of activities(); track activity.id) {
+        <li>
+          <a [routerLink]="['/activity', activity.id]">
+            <div class="row-main">
+              <span class="title">{{ activity.title }}</span>
+              <span class="owner">{{ activity.ownerDisplayName }}</span>
+            </div>
+            <div class="row-stats">
+              <span>{{ (activity.distanceMeters / 1000).toFixed(2) }} km</span>
+              <span>{{ (activity.durationSeconds / 60).toFixed(0) }} min</span>
+            </div>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</div>

@@ -1,0 +1,33 @@
+<div class="auth-page">
+  <form class="auth-card" (ngSubmit)="submit()">
+    <h1>FitTrack</h1>
+    <p class="subtitle">Créez votre compte</p>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <label>
+      Nom affiché
+      <input type="text" name="displayName" [(ngModel)]="displayName" required autocomplete="name" />
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" [(ngModel)]="email" required autocomplete="email" />
+    </label>
+
+    <label>
+      Mot de passe (8 caractères min.)
+      <input type="password" name="password" [(ngModel)]="password" required minlength="8" autocomplete="new-password" />
+    </label>
+
+    <button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Création…' : 'Créer mon compte' }}
+    </button>
+
+    <p class="switch">
+      Déjà un compte ? <a routerLink="/login">Se connecter</a>
+    </p>
+  </form>
+</div>

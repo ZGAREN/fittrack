@@ -1,0 +1,113 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #ff5722;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+
+    a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.85;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+
+      &.active,
+      &:hover {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+  }
+
+  .account {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    button {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  padding: 1rem;
+  padding-bottom: 5rem;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .topbar .nav-links {
+    display: none;
+  }
+
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    z-index: 10;
+
+    a {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 0.5rem 0;
+      text-decoration: none;
+      color: #666;
+      font-size: 0.7rem;
+
+      &.active {
+        color: #ff5722;
+      }
+    }
+  }
+}

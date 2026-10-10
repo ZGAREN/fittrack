@@ -1,0 +1,31 @@
+<div class="detail-page">
+  @if (loading()) {
+    <p>Chargement…</p>
+  } @else if (activity()) {
+    <header>
+      <h1>{{ activity()!.title }}</h1>
+      <span class="owner">par {{ activity()!.ownerDisplayName }}</span>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="value">{{ (activity()!.distanceMeters / 1000).toFixed(2) }}</span>
+        <span class="label">km</span>
+      </div>
+      <div class="stat">
+        <span class="value">{{ (activity()!.durationSeconds / 60).toFixed(0) }}</span>
+        <span class="label">min</span>
+      </div>
+      <div class="stat">
+        <span class="value">{{ activity()!.averageSpeedKmh.toFixed(1) }}</span>
+        <span class="label">km/h moy.</span>
+      </div>
+    </div>
+
+    <div class="map" #mapContainer></div>
+
+    <button type="button" class="delete" (click)="delete()">Supprimer l'activité</button>
+  } @else {
+    <p>Activité introuvable.</p>
+  }
+</div>

@@ -1,0 +1,45 @@
+<div class="record-page">
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <div class="setup" [class.hidden]="recording()">
+    <label>
+      Titre
+      <input type="text" name="title" [(ngModel)]="title" [disabled]="recording()" />
+    </label>
+    <label>
+      Type
+      <select name="type" [(ngModel)]="type" [disabled]="recording()">
+        <option value="RUNNING">Course</option>
+        <option value="CYCLING">Vélo</option>
+        <option value="WALKING">Marche</option>
+        <option value="HIKING">Randonnée</option>
+        <option value="OTHER">Autre</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="value">{{ formatElapsed() }}</span>
+      <span class="label">Durée</span>
+    </div>
+    <div class="stat">
+      <span class="value">{{ formatDistance() }}</span>
+      <span class="label">km</span>
+    </div>
+  </div>
+
+  <div class="map" #mapContainer></div>
+
+  <div class="controls">
+    @if (!recording()) {
+      <button type="button" class="start" (click)="start()" [disabled]="saving()">
+        {{ saving() ? 'Enregistrement…' : 'Démarrer' }}
+      </button>
+    } @else {
+      <button type="button" class="stop" (click)="stop()">Arrêter &amp; enregistrer</button>
+    }
+  </div>
+</div>

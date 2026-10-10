@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-fittrack}
+      POSTGRES_USER: ${DB_USER:-fittrack}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-fittrack}
+    volumes:
+      - fittrack-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-fittrack}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-fittrack}
+      DB_USER: ${DB_USER:-fittrack}
+      DB_PASSWORD: ${DB_PASSWORD:-fittrack}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "8081:80"
+
+volumes:
+  fittrack-postgres-data:

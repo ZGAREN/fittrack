@@ -1,0 +1,28 @@
+<div class="app-shell">
+  <header class="topbar">
+    <span class="brand">FitTrack</span>
+    <nav class="nav-links">
+      <a routerLink="/record" routerLinkActive="active">Enregistrer</a>
+      <a routerLink="/history" routerLinkActive="active">Historique</a>
+      <a routerLink="/feed" routerLinkActive="active">Fil</a>
+      <a routerLink="/profile" routerLinkActive="active">Profil</a>
+    </nav>
+    <div class="account">
+      @if (currentUser()) {
+        <span class="username">{{ currentUser()?.displayName }}</span>
+        <button type="button" (click)="logout()">Déconnexion</button>
+      }
+    </div>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+  <nav class="bottom-nav">
+    <a routerLink="/record" routerLinkActive="active">🏃<span>Enregistrer</span></a>
+    <a routerLink="/history" routerLinkActive="active">📜<span>Historique</span></a>
+    <a routerLink="/feed" routerLinkActive="active">👥<span>Fil</span></a>
+    <a routerLink="/profile" routerLinkActive="active">👤<span>Profil</span></a>
+  </nav>
+</div>

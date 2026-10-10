@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: fittrack
+  profiles:
+    active: dev
+
+fittrack:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
+      expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:fittrack;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+  flyway:
+    enabled: false
+  h2:
+    console:
+      enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:fittrack}
+    username: ${DB_USER:fittrack}
+    password: ${DB_PASSWORD:fittrack}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration

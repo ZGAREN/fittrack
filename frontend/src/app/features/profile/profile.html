@@ -1,0 +1,52 @@
+<div class="profile-page">
+  @if (me()) {
+    <div class="me-card">
+      <h1>{{ me()!.displayName }}</h1>
+      <p>{{ me()!.email }}</p>
+      <p class="id-hint">Votre identifiant : <strong>{{ me()!.id }}</strong> — partagez-le pour être suivi.</p>
+    </div>
+  }
+
+  <form class="follow-form" (ngSubmit)="follow()">
+    <label>
+      Suivre un utilisateur (par identifiant)
+      <input type="number" name="followUserId" [(ngModel)]="followUserId" required />
+    </label>
+    <button type="submit">Suivre</button>
+  </form>
+
+  @if (message()) {
+    <p class="message">{{ message() }}</p>
+  }
+
+  <section>
+    <h2>Abonnements ({{ following().length }})</h2>
+    @if (following().length === 0) {
+      <p class="empty">Vous ne suivez personne pour l'instant.</p>
+    } @else {
+      <ul class="user-list">
+        @for (user of following(); track user.id) {
+          <li>
+            <span>{{ user.displayName }} <small>#{{ user.id }}</small></span>
+            <button type="button" (click)="unfollow(user.id)">Ne plus suivre</button>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+
+  <section>
+    <h2>Abonnés ({{ followers().length }})</h2>
+    @if (followers().length === 0) {
+      <p class="empty">Aucun abonné pour l'instant.</p>
+    } @else {
+      <ul class="user-list">
+        @for (user of followers(); track user.id) {
+          <li>
+            <span>{{ user.displayName }} <small>#{{ user.id }}</small></span>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</div>
